@@ -1,42 +1,73 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			people: [],
+			planets: [],
+			species: [],
+			starShips: [],
+			vehicles: [],
+			nextPage: null
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
+			loadPeople: async () => {
 				const store = getStore();
+				const url = store.nextPage || 'https://www.swapi.tech/api/people/';
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+				try {
+					const resp = await fetch(url);
+					const data = await resp.json();
 
-				//reset the global store
-				setStore({ demo: demo });
+					setStore({
+						people: [...store.people, ...data.results], //agregar personajes al array existente
+						nextPage: data.next
+					});
+				} catch (err) {
+					console.error(err);
+				}
+				/*
+				fetch('https://www.swapi.tech/api/people/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ people: response })
+					})
+						*/
+			},
+
+			loadPlanets: () => {
+				fetch('https://www.swapi.tech/api/planets/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ planets: response })
+					})
+			},
+
+			loadSpecies: () => {
+				fetch('https://www.swapi.tech/api/species/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ species: response })
+					})
+			},
+
+			loadStarships: () => {
+				fetch('https://www.swapi.tech/api/starships/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ starShips: response })
+					})
+			},
+
+			loadVehicles: () => {
+				fetch('https://www.swapi.tech/api/vehicles/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ vehicles: response })
+					})
 			}
 		}
 	};
