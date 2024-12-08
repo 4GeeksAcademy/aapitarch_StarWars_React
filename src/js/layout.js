@@ -7,6 +7,8 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Anchor } from "./component/anchors";
+
 
 //create your first component
 const Layout = () => {
@@ -19,10 +21,15 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Navbar />
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="*" element={<h1>Not found!</h1>} />
-					</Routes>
+					<div className="d-flex">
+						<Anchor />
+						<div className="content-area">
+							<Routes>
+								<Route path="/" element={<Home />} />
+								<Route path="*" element={<h1>Not found!</h1>} />
+							</Routes>
+						</div>
+					</div>
 					<Footer />
 				</ScrollToTop>
 			</BrowserRouter>

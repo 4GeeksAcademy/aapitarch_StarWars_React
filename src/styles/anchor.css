@@ -1,0 +1,18 @@
+.anchor-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%; /* Ancho del Anchor */
+    height: 100%; /* Ocupa toda la altura */
+    overflow-y: auto; /* Habilita scroll si el contenido es demasiado largo */
+    background-color: #f8f9fa; /* Color de fondo opcional */
+    padding: 10px;
+    border-right: 1px solid #ddd; /* Línea divisoria opcional */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Estilo para la parte de contenido principal */
+.content-area {
+    margin-left: 20%; /* Deja espacio para el Anchor */
+    padding: 20px;
+}

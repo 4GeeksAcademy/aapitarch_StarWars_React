@@ -6,10 +6,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 			species: [],
 			starShips: [],
 			vehicles: [],
-			nextPage: null
+			getCategory: null,
+			favorites: []
 		},
 		actions: {
-			loadPeople: async () => {
+			setCategory: (category) => {
+				setStore({ getCategory: category })
+			},
+
+			addFavorite: (id) => {
+				const favorites = getStore().favorites;
+				const newFavorite = [...favorites, id];
+				setStore({ favorites: newFavorite })
+			},
+
+			removeFavorite: (id) => {
+				const favorites = getStore().favorites;
+				const lastFavorite = favorites.filter(item => item !== id);
+				setStore({ favorites: lastFavorite })
+			},
+
+			loadPeople: () => {
+				const store = getStore();
+
+				if(store.people.length === 0) {
+					fetch('https://www.swapi.tech/api/people/')
+					.then(resp => resp.json())
+					.then(respJson => {
+						const response = respJson.results;
+						setStore({ people: response })
+					})
+				}
+				
+				/*
 				const store = getStore();
 				const url = store.nextPage || 'https://www.swapi.tech/api/people/';
 
@@ -24,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (err) {
 					console.error(err);
 				}
-				/*
+				
 				fetch('https://www.swapi.tech/api/people/')
 					.then(resp => resp.json())
 					.then(respJson => {
@@ -35,39 +64,55 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			loadPlanets: () => {
-				fetch('https://www.swapi.tech/api/planets/')
+				const store = getStore();
+
+				if(store.planets.length === 0) {
+					fetch('https://www.swapi.tech/api/planets/')
 					.then(resp => resp.json())
 					.then(respJson => {
 						const response = respJson.results;
 						setStore({ planets: response })
-					})
+				})
+				}
 			},
 
 			loadSpecies: () => {
-				fetch('https://www.swapi.tech/api/species/')
+				const store = getStore();
+
+				if(store.species.length === 0) {
+					fetch('https://www.swapi.tech/api/species/')
 					.then(resp => resp.json())
 					.then(respJson => {
 						const response = respJson.results;
 						setStore({ species: response })
-					})
+				})
+				}
 			},
 
 			loadStarships: () => {
-				fetch('https://www.swapi.tech/api/starships/')
+				const store = getStore();
+
+				if(store.starShips.length === 0) {
+					fetch('https://www.swapi.tech/api/starships/')
 					.then(resp => resp.json())
 					.then(respJson => {
 						const response = respJson.results;
 						setStore({ starShips: response })
-					})
+				})
+				}
 			},
 
-			loadVehicles: () => {
-				fetch('https://www.swapi.tech/api/vehicles/')
+			loadVehicles: async () => {
+				const store = getStore();
+
+				if(store.vehicles.length === 0) {
+					fetch('https://www.swapi.tech/api/vehicles/')
 					.then(resp => resp.json())
 					.then(respJson => {
 						const response = respJson.results;
 						setStore({ vehicles: response })
-					})
+				})
+				}
 			}
 		}
 	};

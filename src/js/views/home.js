@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import Card from "../component/Card";
 
@@ -8,29 +8,40 @@ import "../../styles/home.css";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	useEffect(() => {
+        if (store.getCategory === "people") actions.loadPeople();
+        if (store.getCategory === "planets") actions.loadPlanets();
+        if (store.getCategory === "species") actions.loadSpecies();
+        if (store.getCategory === "starships") actions.loadStarships();
+        if (store.getCategory === "vehicles") actions.loadVehicles();
+    }, [store.getCategory]);
+
+    const getDataByCategory = () => {
+        if (store.getCategory === "people") return store.people;
+        if (store.getCategory === "planets") return store.planets;
+        if (store.getCategory === "species") return store.species;
+        if (store.getCategory === "starships") return store.starShips;
+        if (store.getCategory === "vehicles") return store.vehicles;
+        return [];
+    };
+
+	const data = getDataByCategory();
+
 	return (
 		<div className="text-center mt-5">
-			<h1>Personajes</h1>
-		  <div className="d-flex flex-wrap justify-content-center">
-			{
-			  store.people.map((person) => (
-				<Card 
-					key={person.uid} 
-					title={person.name} 
-					image={`https://starwars-visualguide.com/assets/img/characters/${person.uid}.jpg`}
-				/>
-			  ))
-			}
-		  </div>
-		  {
-			store.nextPage && (
-				<button
-					className="btn btn-primary mt-4"
-					onClick={actions.loadPeople}>
-						Cargar mas
-					</button>
-			)
-		  }
+			<div className="d-flex flex-wrap justify-content-center">
+				{
+					data.map((data) => (
+						<Card
+							key={data.uid}
+							title={data.name}
+							image={`https://starwars-visualguide.com/assets/img/${store.getCategory}/${data.uid}.jpg`}
+							id={data.uid}
+							item={data.uid}
+						/>
+					))
+				}
+			</div>
 		</div>
-	  );
+	);
 };
