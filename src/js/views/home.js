@@ -1,46 +1,22 @@
-import React, { useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
-import Card from "../component/Card";
+import React from "react";
+import { Characters } from "./ViewCard/CardPeople";
 
 import "../../styles/home.css";
-
+import { Vehicles } from "./ViewCard/CardVehicles";
+import { Species } from "./ViewCard/CardSpecies";
+import { Starships } from "./ViewCard/CardStarships";
+import { Planets } from "./ViewCard/CardPlanets";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-
-	useEffect(() => {
-        if (store.getCategory === "people") actions.loadPeople();
-        if (store.getCategory === "planets") actions.loadPlanets();
-        if (store.getCategory === "species") actions.loadSpecies();
-        if (store.getCategory === "starships") actions.loadStarships();
-        if (store.getCategory === "vehicles") actions.loadVehicles();
-    }, [store.getCategory]);
-
-    const getDataByCategory = () => {
-        if (store.getCategory === "people") return store.people;
-        if (store.getCategory === "planets") return store.planets;
-        if (store.getCategory === "species") return store.species;
-        if (store.getCategory === "starships") return store.starShips;
-        if (store.getCategory === "vehicles") return store.vehicles;
-        return [];
-    };
-
-	const data = getDataByCategory();
 
 	return (
 		<div className="text-center mt-5">
 			<div className="d-flex flex-wrap justify-content-center">
-				{
-					data.map((data) => (
-						<Card
-							key={data.uid}
-							title={data.name}
-							image={`https://starwars-visualguide.com/assets/img/${store.getCategory}/${data.uid}.jpg`}
-							id={data.uid}
-							item={data.uid}
-						/>
-					))
-				}
+				<Characters />
+				<Vehicles />
+				<Species />
+				<Starships />
+				<Planets />
 			</div>
 		</div>
 	);
