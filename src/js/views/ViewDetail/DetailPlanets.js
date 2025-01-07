@@ -17,23 +17,26 @@ export const DetailPlanets = () => {
     if (!planet) return null; //mientras no tengo character no pinto nada
     console.log(planet)
     return (
-        <div className="text-center mt-5">
-            <div className="d-flex flex-wrap justify-content-center">
-
-            <img src={`https://starwars-visualguide.com/assets/img/planets/${params.uid}.jpg`} className="card-img-top" alt="" />
-                <h1>{planet.properties.name} </h1>
-                <h5><b>climate</b>{ planet.properties.climate }</h5>
-                <h5><b>diameter</b>{ planet.properties.diameter }</h5>
-                <h5><b>gravity</b>{ planet.properties.gravity }</h5>
-                <h5><b>orbital_period</b>{ planet.properties.orbital_period }</h5>
-                <h5><b>population</b>{ planet.properties.population }</h5>
-                <h5><b>rotation_period</b>{ planet.properties.rotation_period }</h5>
-                <h5><b>surface_water</b>{ planet.properties.surface_water }</h5>
-                <h5><b>terrain</b>{ planet.properties.terrain }</h5>
-                <Link to={`/`}>
-                    <button className="btn btn-dark border border-warning">Atras</button>
-                </Link>
-
+        <div className="jumbotron-container">
+            <div className="jumbotron">
+            <h1 className="planet-name">{planet.properties.name} </h1>
+                <img src={`https://starwars-visualguide.com/assets/img/planets/${params.uid}.jpg`} className="jumbotron-img" />
+                <div className="jumbotron-details">
+                    
+                    <div className="planet-characteristics">
+                        <p><b>Climate: </b>{planet.properties.climate}</p>
+                        <p><b>Diameter: </b>{planet.properties.diameter}</p>
+                        <p><b>Gravity: </b>{planet.properties.gravity}</p>
+                        <p><b>Orbital period: </b>{planet.properties.orbital_period}</p>
+                        <p><b>Population: </b>{planet.properties.population}</p>
+                        <p><b>Rotation period: </b>{planet.properties.rotation_period}</p>
+                        <p><b>Surface water: </b>{planet.properties.surface_water}</p>
+                        <p><b>Terrain: </b>{planet.properties.terrain}</p>
+                    </div>
+                    <Link to={`/`}>
+                        <button className="back-button">Atras</button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
